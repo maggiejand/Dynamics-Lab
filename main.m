@@ -5,31 +5,29 @@ clc;
 
 %[G,x,y,z,s,vx,vy,vz] = bankedTurn(0,0,0,5,6,7,14);
 
-%% Example for how to get position vectors out of banked turn
-theta = 25;
-r = 50;
-deg = linspace(0,theta,25);
-xinit  = 0;
-yinit = 0;
-zinit = 0;
-xb =0;
-yb=0;
-zb = 0;
+%% Example for how to get position vectors out of loop
 
-% we know that the position can be modeled with (x-r)^2+y^2=r^2 (r,0) or
-% x^2+(y-r)=r^2 (0,r) depending on which way we want the turn to bank, we can
-% make radius negative to complete all options
+theta = 0:360;
+r=25;
+center = [0 0 (0+r)];
+vx=5;
+vy=10;
 
-%case for x bank
+zp = center(3)-r*sind(theta);
+directionp = center(1) + r*cosd(theta);
+angle = atan(vy/vx);
+xp = directionp.*cos(angle);
+yp=directionp.*sin(angle);
 
-%this process would also work well for a loop
-center = [(xinit+r) yinit];
-for i = 1:length(deg)
-    zb(i) = zinit;
-    xb(i) = center(1)+r*cosd(deg(i));
-    yb(i) = center(2)+r*sind(deg(i));
-
-end
+%% Example for Position of banked turn
+r1 = 50;
+theta1 = 0:45;
+center1 = [(100+r) 100 100];
+direction1p = center1(1)-r1*cosd(theta1); 
+direction2p = center(2)+r1*sind(theta1);
+x1p = direction1p.*cos(angle)+direction2p.*cos(angle);
+y1p = direction2p.*sin(angle)+direction1p.*sin(angle);
+z1p = center(3)*ones(1,length(theta1));
 
 %% Plotting 
 % no need to attatch position vectors, they don't need to be plotted with
@@ -37,8 +35,11 @@ end
 
 
 figure (1)
+plot3(x1p,y1p,z1p);
+xlabel('X-axis');
+ylabel('Y-axis');
+zlabel('Z-axis');
 
-plot3(xb,yb,zb);
 
 %% Plot total Gs
 
