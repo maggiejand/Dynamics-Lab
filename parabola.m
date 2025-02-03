@@ -1,18 +1,21 @@
-function [G,s,x,y,z,vx,vy,vz] = parabola(x0,y0,z0,vx0,vy0,vz0)
+function [G,s,x,y,z,vx,vy,vz] = zerog_parabola(x0,y0,z0,vx0,vy0,vz0,t_end)
 
-h_0 = 125; % m
+% h_0 = 125; % m
 g = 9.81; % m/s^2
-delta_h_initial = h_0 - z0; % m
 
-t = linspace(0,1000,1000); % time 
+t = linspace(0,t_end,1000); % time 
 
 x1 = x0 + vx0.*t;
 y1 = y0 + vy0.*t;
 z1 = z0 + vz0.t - (0.5)*g.*t.^2;
 
-x = x1(length(t));
-y = y1(length(t));
-z = z1(length(t));
+x = x1(end);
+y = y1(end);
+z = z1(end);
+
+vx = vx0;
+vy = vy0;
+vz = vz0 - g*t(end);
 
 G = 0.*t;
 s = zeros(length(t));
