@@ -13,12 +13,12 @@ s = r*theta;
 theta = 0:theta;
 
 angle = atan(vy0/vx0);
-centerangled = [(0+r) 0 z0];
+centerangled = [(x0+r) y0 z0];
 directionp = centerangled(1)-r*cosd(theta);
-directionperp = center(2) + r*sind(theta);
+directionperp = centerandled(2) + r*sind(theta);
 
-x = (directionp * cos(angle) - directionperp * sin(angle))+x0;
-y = (directionp * sin(angle) + directionperp * cos(angle))+y0;
+x = (directionp * cos(angle) - directionperp * sin(angle));
+y = (directionp * sin(angle) + directionperp * cos(angle));
 z = centerangled(3)*ones(1,length(theta));
 
 vz = vz0;
