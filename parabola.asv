@@ -1,4 +1,5 @@
 function [G,s,x,y,z,vx,vy,vz] = zerog_parabola(x0,y0,z0,vx0,vy0,vz0,t_end)
+
 h_0 = 125; % m
 g = 9.81; % m/s^2
 
@@ -29,11 +30,7 @@ rho = ((1+(f_prime).^2)^(3/2))./(f_Dprime);
 
 Vel = sqrt(2*g*(h_0-f));
 
-ds = sqrt(y.^2 + z.^2);
-
-d_theta = ds/rho;
-
-G = -Vel.^2/(rho*g) + sin(d_theta);
+ds = 
 
 
 
