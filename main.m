@@ -79,6 +79,10 @@ scatter3(x(1:end-1),y(1:end-1),z(1:end-1),2,G,'filled');
 
 s_tot = s_tot+s(end);
 
+G_parabola = G;
+s_parabola = s;
+dist_parabola = s_parabola(1:end-1)';
+
 %% Another loop to get flat 
 
 x0 = x(end);
@@ -147,3 +151,32 @@ plot3(x,y,z);
 scatter3(x,y,z,2,G,'filled');
 
 
+%% Plotting
+
+figure();
+plot(dist_parabola,G_parabola);
+yline(5,'r--');
+yline(-4,'r--');
+legend('Gs felt','Forward G max.','Backward G max.');
+ylim([-5,6]);
+xlim([0,s_parabola(end-1)]);
+title('Gs Felt Forward and Back (+ y and - y respectively)');
+
+
+figure();
+plot(dist_parabola,G_parabola);
+yline(6,'r--');
+yline(-1,'r--');
+ylim([-2,7]);
+xlim([0,s_parabola(end-1)]);
+legend('Gs felt','Upward G max.','Downward G max.');
+title('Gs Felt Up and Down (+ y and - y respectively)');
+
+figure();
+plot(dist_parabola,G_parabola);
+yline(3,'r--');
+yline(-3,'r--');
+ylim([-4,4]);
+xlim([0,s_parabola(end-1)]);
+legend('Gs felt','Left G max.','Right G max.');
+title('Gs Felt Laterally Left and Right (+ y and - y respectively)');
