@@ -2,30 +2,15 @@ clear;
 clc;
 close all;
 
-
-%{
-%% Example for Position of banked turn
-r1 = 50;
-theta1 = 0:45;
-angle1 = atan(vy/vx);
-
-centerangled = [(0+r) 0 0];
-direction1p = centerangled(1)-r*cosd(theta1);
-directionperp1 = center(2) + r*sind(theta1);
-
-x1p = direction1p * cos(angle1) - directionperp1 * sin(angle1);
-y1p = direction1p * sin(angle1) + directionperp1 * cos(angle1);
-z1p = centerangled(3)*ones(1,length(theta1));
-%}
-
-
 %% Starting from the top
 % Ploting
 figure(1);
 hold on;
-xlabel('X-axis');
-ylabel('Y-axis');
-zlabel('Z-axis');
+title("The Super-Duper G Coaster")
+xlabel('X-axis (m)');
+ylabel('Y-axis (m)');
+zlabel('Z-axis (m)');
+grid on;
 cb = colorbar; 
 cb.Label.String = "Gs Experienced";
 
@@ -42,7 +27,14 @@ t_end = 2.75;
 view(3);
 plot3(x,y,z);
 scatter3(x(1:end-1),y(1:end-1),z(1:end-1),3,G,'filled');
+
+s_save = (s(1:end-1))';
+s_1 = (s(1:end-1))';
+G_save = G;
+G_1 = G
 s_tot = s(end);
+
+
 
 %% Going into loopies
 
@@ -53,7 +45,7 @@ vx0 = vx;
 vy0 = vy;
 vz0 = vz;
 
-r = 35;
+r = 15;
 
 [G, s, x, y, z, vx, vy, vz] = loopgs(x0,y0,z0,vx0,vy0,vz0, r);
 
@@ -61,8 +53,15 @@ view(3);
 plot3(x,y,z);
 scatter3(x,y,z,2,G,'filled');
 
-s_tot = s_tot+s;
+s_tot = s_tot+s(end);
+s_save = [s_save, abs(s)+s_save(end)];
+G_save = [G_save,G];
+%{
+hold off;
+figure (2);
+plot(s_save,G_save);
 
+%}
 %% 0g parabola
 x0 = x(end);
 y0 = y(end);                                                                                                                                                                                                                                
@@ -70,7 +69,7 @@ z0 = z(end);
 vx0 = vx;
 vy0 = vy;
 vz0 = vz;
-t_end = 3;
+t_end = 2.8;
 
 [G,s,x,y,z,vx,vy,vz] = parabola(x0,y0,z0,vx0,vy0,vz0,t_end,1);
 
@@ -80,7 +79,7 @@ scatter3(x(1:end-1),y(1:end-1),z(1:end-1),2,G,'filled');
 
 s_tot = s_tot+s(end);
 
-%% Another loop to get flat
+%% Another loop to get flat 
 
 x0 = x(end);
 y0 = y(end);                                                                                                                                                                                                                                
@@ -88,8 +87,7 @@ z0 = z(end);
 vx0 = vx;
 vy0 = vy;
 vz0 = vz;
-
-r = 20;
+r = 45;
 
 [G, s, x, y, z, vx, vy, vz] = loopgs(x0,y0,z0,vx0,vy0,vz0, r);
 
@@ -105,11 +103,47 @@ z0 = z(end);
 vx0 = vx;
 vy0 = vy;
 vz0 = vz;
-phi = 60;
-theta = 179;
+phi = 75;
+theta = 180;
 [G,x,y,z,s,vx,vy,vz] = bankedTurn(x0,y0,z0,vx0,vy0,vz0,phi,theta);
 
 view(3);
 plot3(x,y,z);
 scatter3(x,y,z,2,G,'filled');
 s_tot = s_tot+s;
+
+%% Some downslope to get to 0
+
+x0 = x(end);
+y0 = y(end);                                                                                                                                                                                                                                
+z0 = z(end);
+vx0 = vx;
+vy0 = vy;
+vz0 = vz;
+t_end = 0.666;
+
+[G,s,x,y,z,vx,vy,vz] = parabola(x0,y0,z0,vx0,vy0,vz0,t_end,1);
+
+view(3);
+plot3(x,y,z);
+scatter3(x(1:end-1),y(1:end-1),z(1:end-1),2,G,'filled');
+
+s_tot = s_tot+s(end);
+
+
+%% Annnnnd we're braking
+
+x0 = x(end);
+y0 = y(end);                                                                                                                                                                                                                              
+z0 = z(end);
+vx0 = vx;
+vy0 = vy;
+vz0 = vz;
+
+[G,x,y,z,s,vx,vy,vz] = braking(x0,y0,z0,vx0,vy0,vz0);
+
+view(3);
+plot3(x,y,z);
+scatter3(x,y,z,2,G,'filled');
+
+

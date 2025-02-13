@@ -19,8 +19,8 @@ y = center(2) + r.*sind(theta);
 z = ones(1,length(theta))*z0;
 
 vz = vz0;
-vx = 5;
-vy=6;
+vx = vx0*cos(theta(end));
+vy=vy0*sin(theta(end));
 %figure(27)
 G = ones(1,length(theta)).*1./cosd(phi);
 % hold on;

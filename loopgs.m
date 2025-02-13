@@ -5,13 +5,14 @@ function [G, s, x1, y1, z1, vx, vy, vz] = loopgs(x0,y0,z0,vx0,vy0,vz0, r)
     theta = linspace(rad2deg(atan(vz0/vy0)),270,250);
     theta_loop = linspace(-90,270,750);
     g = 9.8;
-    v0 = sqrt(2*g*z0);
+    h0 = 125;
+    v0 = sqrt(2*g*(h0-z0));
 
     s = linspace(0,2*pi*r,750);
     s_transition = linspace(r*theta(1)*pi/180,0,250);
 
-    center = [x0,y0+r*cos(atan(-1/(vz0/vy0))), z0+r*sin(atan(-1/(vz0/vy0)))]
-
+    center = [x0,y0+r*cos(atan(-1/(vz0/vy0))), z0+r*sin(atan(-1/(vz0/vy0)))];
+    
     x1 = linspace(0,0,1000);
     y1 = center(2) - r.*cosd(theta);
     z1 = center(3) + r.*sind(theta);
@@ -30,5 +31,5 @@ function [G, s, x1, y1, z1, vx, vy, vz] = loopgs(x0,y0,z0,vx0,vy0,vz0, r)
     G_transition = v0^2/(g*r) + 3*cos(s_transition/r) - 2;
     G = [G_transition,G_loop];
 
-    s = s(end)+s_transition(1);
+    s = [abs(s_transition),s+abs(s_transition(1))];
 end

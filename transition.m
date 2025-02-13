@@ -5,7 +5,7 @@ function [G, s, x1, y1, z1, vx, vy, vz] = transition(x0,y0,z0,vx0,vy0,vz0, r)
     theta = linspace(270-rad2deg(atan(vz0/vy0)),270,1000);
     theta_loop = linspace(0,360,1000);
     g = 9.8;
-    v0 = sqrt(2*g*z0);
+    v0 = sqrt(2*g*(125-z0));
 
     s_transition = linspace(r*theta(1)*pi/180,0,1000);
 
