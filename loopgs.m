@@ -2,7 +2,7 @@ function [G, s, x1, y1, z1, vx, vy, vz] = loopgs(x0,y0,z0,vx0,vy0,vz0, r)
     % h0: represents height difference between bottom of the loop and any
     % hill present before the loop
     % r: radius of the loop
-    theta = linspace(atan(vz0/vy0),270,250);
+    theta = linspace(rad2deg(atan(vz0/vy0)),270,250);
     theta_loop = linspace(-90,270,750);
     g = 9.8;
     v0 = sqrt(2*g*z0);
@@ -10,12 +10,7 @@ function [G, s, x1, y1, z1, vx, vy, vz] = loopgs(x0,y0,z0,vx0,vy0,vz0, r)
     s = linspace(0,2*pi*r,750);
     s_transition = linspace(r*theta(1)*pi/180,0,250);
 
-    if abs(vz0)>abs(vy0)
-        center = [x0,y0+r*cosd(atan(-vz0/vy0)), z0-r*sind(atan(-vz0/vy0))];
-    else
-        center = [x0,y0+r*cosd(atan(-vz0/vy0)), z0+r*sind(atan(-vz0/vy0))]
-    end
-
+    center = [x0,y0+r*cos(atan(-1/(vz0/vy0))), z0+r*sin(atan(-1/(vz0/vy0)))]
 
     x1 = linspace(0,0,1000);
     y1 = center(2) - r.*cosd(theta);
