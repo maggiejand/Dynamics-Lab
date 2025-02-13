@@ -9,29 +9,29 @@ h_0 = 125;
 v = sqrt(2*g*(h_0-z0));
 % Radius Calculation
 r = cotd(phi)*v^2/(g);
-s = r*theta;
-theta = 0:theta;
+s = r*theta*pi/180;
+theta = linspace(0,theta,1000);
 
-angle = atan(vy0/vx0);
-centerangled = [(x0+r) y0 z0];
-directionp = centerangled(1)-r*cosd(theta);
-directionperp = centerandled(2) + r*sind(theta);
+center = [x0+r, y0,z0];
 
-x = (directionp * cos(angle) - directionperp * sin(angle));
-y = (directionp * sin(angle) + directionperp * cos(angle));
-z = centerangled(3)*ones(1,length(theta));
+x = center(1) - r.*cosd(theta);
+y = center(2) + r.*sind(theta);
+z = ones(1,length(theta))*z0;
 
 vz = vz0;
 vx = 5;
 vy=6;
-
-G = 1./cosd(phi);
+%figure(27)
+G = ones(1,length(theta)).*1./cosd(phi);
 % hold on;
-plot(theta,G);
+%plot(theta,G);
 % plot(theta,r);
-xlabel('Angle of Bank (deg)')
+%xlabel('Angle of Bank (deg)')
 % ylabel('Radius Needed (m)')
 % Normal G calculation
 % yyaxis right
-ylabel('Gs Felt')
-xline(acosd(1/6)); % All angles past this are unusable (Normal Gs > 6)
+%ylabel('Gs Felt')
+%xline(acosd(1/6)); % All angles past this are unusable (Normal Gs > 6)
+%hold off;
+
+end
