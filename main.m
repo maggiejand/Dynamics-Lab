@@ -160,8 +160,9 @@ yline(-4,'r--');
 legend('Gs felt','Forward G max.','Backward G max.');
 ylim([-5,6]);
 xlim([0,s_parabola(end-1)]);
+ylabel('Gs');
+xlabel('Distance (m)');
 title('Gs Felt Forward and Back (+ y and - y respectively)');
-
 
 figure();
 plot(dist_parabola,G_parabola);
@@ -170,6 +171,8 @@ yline(-1,'r--');
 ylim([-2,7]);
 xlim([0,s_parabola(end-1)]);
 legend('Gs felt','Upward G max.','Downward G max.');
+ylabel('Gs');
+xlabel('Distance (m)');
 title('Gs Felt Up and Down (+ y and - y respectively)');
 
 figure();
@@ -179,4 +182,6 @@ yline(-3,'r--');
 ylim([-4,4]);
 xlim([0,s_parabola(end-1)]);
 legend('Gs felt','Left G max.','Right G max.');
+ylabel('Gs');
+xlabel('Distance (m)');
 title('Gs Felt Laterally Left and Right (+ y and - y respectively)');
