@@ -20,8 +20,8 @@ function [G_tangential,G_normal, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, v
     vx = zeros(1, n);
     vy = zeros(1, n);
     vz = zeros(1, n);
-    G_tangential = ones(1, n) * (a / g);
-    G_normal = ones(1,n) * (1/cos(atan2(vz0, sqrt(vx0^2 + vy0^2))));
+    
+    G_normal = ones(1,n) * (cos(atan2(vz0, sqrt(vx0^2 + vy0^2))));
     
     % Initial conditions
     V_tot(1) = V_tot0;
@@ -51,7 +51,7 @@ function [G_tangential,G_normal, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, v
         y(i) = y(i-1) + (V_tot(i) * (vy0 / sqrt(vx0^2 + vy0^2 + vz0^2))) * dt;
         z(i) = z(i-1) + (V_tot(i) * (vz0 / sqrt(vx0^2 + vy0^2 + vz0^2))) * dt;
         
-        % Ensure z does not go below zero
+        % Ensure z does not go beow zero
         if z(i) <= 0
             z(i) = 0;
             break;
@@ -77,4 +77,5 @@ function [G_tangential,G_normal, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, v
     % Compute arc length
     s = cumsum(sqrt(diff([x0, x]).^2 + diff([y0, y]).^2 + diff([z0, z]).^2));
     s = linspace(0,s(end),length(G_normal));
+    G_tangential = ones(1, n) * ();
 end
