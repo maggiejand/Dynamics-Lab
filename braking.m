@@ -71,11 +71,12 @@ function [G_tangential,G_normal, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, v
     vy = vy(1:i);
     vz = vz(1:i);
     V_tot = V_tot(1:i);
-    G_tangential= G_tangential(1:i);
+    
     G_normal= G_normal(1:i);
     
     % Compute arc length
     s = cumsum(sqrt(diff([x0, x]).^2 + diff([y0, y]).^2 + diff([z0, z]).^2));
     s = linspace(0,s(end),length(G_normal));
-    G_tangential = ones(1, n) * ();
+    G_tangential = ones(1, n) * (34.025535704602);
+    G_tangential= G_tangential(1:i);
 end
