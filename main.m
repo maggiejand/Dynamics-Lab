@@ -28,6 +28,7 @@ view(3);
 plot3(x,y,z);
 scatter3(x(1:end-1),y(1:end-1),z(1:end-1),3,G,'filled');
 
+
 s_save = (s(1:end-1))';
 s1 = (s(1:end-1))';
 G_save = G;
@@ -232,6 +233,17 @@ title('Total Path V Gs')
 xlabel('Path length (m)')
 ylabel('Normal Gs')
 plot(s_save,G_save)
+xline(s1(end));
+a = s1(end);
+xline(s2(end)+a);
+a = a+s2(end);
+xline(s3(end)+a);
+a = a+s3(end);
+xline(s4(end)+a);
+a = a+s4(end);
+xline(s5(end)+a);
+a = a+s5(end);
+xline(s6(end)+a);
 hold off;
 
 
