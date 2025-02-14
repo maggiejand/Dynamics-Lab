@@ -29,9 +29,9 @@ plot3(x,y,z);
 scatter3(x(1:end-1),y(1:end-1),z(1:end-1),3,G,'filled');
 
 s_save = (s(1:end-1))';
-s_1 = (s(1:end-1))';
+s1 = (s(1:end-1))';
 G_save = G;
-G_1 = G
+G1 = G;
 s_tot = s(end);
 
 
@@ -54,14 +54,11 @@ plot3(x,y,z);
 scatter3(x,y,z,2,G,'filled');
 
 s_tot = s_tot+s(end);
-s_save = [s_save, abs(s)+s_save(end)];
+s_save = [s_save, s+s_save(end)];
+s2 = s;
 G_save = [G_save,G];
-%{
-hold off;
-figure (2);
-plot(s_save,G_save);
+G2 = G;
 
-%}
 %% 0g parabola
 x0 = x(end);
 y0 = y(end);                                                                                                                                                                                                                                
@@ -78,10 +75,10 @@ plot3(x,y,z);
 scatter3(x(1:end-1),y(1:end-1),z(1:end-1),2,G,'filled');
 
 s_tot = s_tot+s(end);
-
-G_parabola = G;
-s_parabola = s;
-dist_parabola = s_parabola(1:end-1)';
+s_save = [s_save,s_save(end)+(s(1:end-1))'];
+s3 = (s(1:end-1))';
+G_save = [G_save,G];
+G3 = G;
 
 %% Another loop to get flat 
 
@@ -98,7 +95,12 @@ r = 45;
 view(3);
 plot3(x,y,z);
 scatter3(x,y,z,2,G,'filled');
-s_tot = s_tot+s;
+
+s_tot = s_tot+s(end);
+s_save = [s_save, s+s_save(end)];
+s4 = s;
+G_save = [G_save,G];
+G4 = G;
 
 %% banked 
 x0 = x(end);
@@ -114,7 +116,11 @@ theta = 180;
 view(3);
 plot3(x,y,z);
 scatter3(x,y,z,2,G,'filled');
-s_tot = s_tot+s;
+s_tot = s_tot+s(end);
+s_save = [s_save, s+s_save(end)];
+s5 = s;
+G_save = [G_save,G];
+G5 = G;
 
 %% Some downslope to get to 0
 
@@ -133,55 +139,100 @@ plot3(x,y,z);
 scatter3(x(1:end-1),y(1:end-1),z(1:end-1),2,G,'filled');
 
 s_tot = s_tot+s(end);
+s_save = [s_save,s_save(end)+(s(1:end-1))'];
+s6 = (s(1:end-1))';
+G_save = [G_save,G];
+G6 = G;
 
 
 %% Annnnnd we're braking
 
 x0 = x(end);
-y0 = y(end);                                                                                                                                                                                                                              
+y0 = y(end);                                                                                                                                                                                                                            
 z0 = z(end);
 vx0 = vx;
 vy0 = vy;
 vz0 = vz;
 
-[G,x,y,z,s,vx,vy,vz] = braking(x0,y0,z0,vx0,vy0,vz0);
+[G_tangential,G_normal,x,y,z,s,vx,vy,vz] = braking(x0,y0,z0,vx0,vy0,vz0);
+
 
 view(3);
 plot3(x,y,z);
-scatter3(x,y,z,2,G,'filled');
+scatter3(x,y,z,2,G_normal,'filled');
+
+s_tot = s_tot+s(end);
+s_save = [s_save,s_save(end)+s];
+s7 = s;
+G_save = [G_save,G_normal];
+G7 = G_normal;
+
+hold off; 
 
 
-%% Plotting
+figure(2);
+hold on;
+title('Parabola 1')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s1,G1)
+hold off;
 
-figure();
-plot(dist_parabola,G_parabola);
-yline(5,'r--');
-yline(-4,'r--');
-legend('Gs felt','Forward G max.','Backward G max.');
-ylim([-5,6]);
-xlim([0,s_parabola(end-1)]);
-ylabel('Gs');
-xlabel('Distance (m)');
-title('Gs Felt Forward and Back (+ y and - y respectively)');
+figure(3);
+hold on;
+title('Loop 1')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s2,G2)
+hold off;
 
-figure();
-plot(dist_parabola,G_parabola);
-yline(6,'r--');
-yline(-1,'r--');
-ylim([-2,7]);
-xlim([0,s_parabola(end-1)]);
-legend('Gs felt','Upward G max.','Downward G max.');
-ylabel('Gs');
-xlabel('Distance (m)');
-title('Gs Felt Up and Down (+ y and - y respectively)');
+figure(4);
+hold on;
+title('Parabola 2')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s3,G3)
+hold off;
 
-figure();
-plot(dist_parabola,G_parabola);
-yline(3,'r--');
-yline(-3,'r--');
-ylim([-4,4]);
-xlim([0,s_parabola(end-1)]);
-legend('Gs felt','Left G max.','Right G max.');
-ylabel('Gs');
-xlabel('Distance (m)');
-title('Gs Felt Laterally Left and Right (+ y and - y respectively)');
+figure(5);
+hold on;
+title('Loop 2')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s4,G4)
+hold off;
+
+figure(6);
+hold on;
+title('Banked Turn 1')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s5,G5)
+hold off;
+
+figure(7);
+hold on;
+title('Parabola 3')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s6,G6)
+hold off;
+
+figure(8);
+hold on;
+title('Braking')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s7,G7)
+hold off;
+
+figure(9)
+hold on;
+title('Total Path V Gs')
+xlabel('Path length (m)')
+ylabel('Normal Gs')
+plot(s_save,G_save)
+hold off;
+
+
+

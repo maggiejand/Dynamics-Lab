@@ -34,4 +34,5 @@ G = ones(1,length(theta)).*1./cosd(phi);
 %xline(acosd(1/6)); % All angles past this are unusable (Normal Gs > 6)
 %hold off;
 
+s = linspace(0,r*theta(end)*pi/180,length(theta));
 end

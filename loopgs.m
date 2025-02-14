@@ -31,7 +31,7 @@ function [G, s, x1, y1, z1, vx, vy, vz] = loopgs(x0,y0,z0,vx0,vy0,vz0, r)
     G_transition = v0^2/(g*r) + 3*cos(s_transition/r) - 2;
     G = [G_transition,G_loop];
 
-    s = [flip(abs(s_transition)),s+abs(s_transition(1))]
+    s = [flip(abs(s_transition)),s+abs(s_transition(1))];
 
 
   

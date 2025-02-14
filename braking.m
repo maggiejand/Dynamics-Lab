@@ -1,4 +1,4 @@
-function [G, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, vx0, vy0, vz0)
+function [G_tangential,G_normal, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, vx0, vy0, vz0)
     g = 9.8; % Gravity acceleration (m/s^2)
     h0 = 125; % Initial height (m)
     V_tot0 = sqrt(2 * g * (h0 - z0)); % Initial total velocity
@@ -20,7 +20,8 @@ function [G, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, vx0, vy0, vz0)
     vx = zeros(1, n);
     vy = zeros(1, n);
     vz = zeros(1, n);
-    G = ones(1, n) * (a / g);
+    G_tangential = ones(1, n) * (a / g);
+    G_normal = ones(1,n) * (1/cos(atan2(vz0, sqrt(vx0^2 + vy0^2))));
     
     % Initial conditions
     V_tot(1) = V_tot0;
@@ -70,8 +71,10 @@ function [G, x, y, z, s, vx, vy, vz] = braking(x0, y0, z0, vx0, vy0, vz0)
     vy = vy(1:i);
     vz = vz(1:i);
     V_tot = V_tot(1:i);
-    G = G(1:i);
+    G_tangential= G_tangential(1:i);
+    G_normal= G_normal(1:i);
     
     % Compute arc length
     s = cumsum(sqrt(diff([x0, x]).^2 + diff([y0, y]).^2 + diff([z0, z]).^2));
+    s = linspace(0,s(end),length(G_normal));
 end
