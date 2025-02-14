@@ -168,6 +168,8 @@ s7 = s;
 G_save = [G_save,G_normal];
 G7 = G_normal;
 
+Gt = G_tangential;
+
 hold off; 
 
 
@@ -226,25 +228,33 @@ xlabel('Path length (m)')
 ylabel('Normal Gs')
 plot(s7,G7)
 hold off;
-
-figure(9)
+line_width = 2; % Set a common line width
+font_size = 14; % Font size for better readability
+marker_size = 6; % Marker size for better visibility
+figure(9);
 hold on;
-title('Total Path V Gs')
-xlabel('Path length (m)')
-ylabel('Normal Gs')
-plot(s_save,G_save)
-xline(s1(end));
+title('Total Path V Gs', 'FontSize', font_size, 'FontWeight', 'bold');
+xlabel('Path length (m)', 'FontSize', font_size);
+ylabel('Normal Gs', 'FontSize', font_size);
+plot(s_save, G_save, 'b-', 'LineWidth', line_width);
+xline(s1(end), '--k', 'Parabola 1', 'LabelHorizontalAlignment', 'left', 'FontSize', font_size-2);
 a = s1(end);
-xline(s2(end)+a);
-a = a+s2(end);
-xline(s3(end)+a);
-a = a+s3(end);
-xline(s4(end)+a);
-a = a+s4(end);
-xline(s5(end)+a);
-a = a+s5(end);
-xline(s6(end)+a);
+xline(s2(end)+a, '--r', 'Loop 1', 'LabelHorizontalAlignment', 'left', 'FontSize', font_size-2);
+a = a + s2(end);
+xline(s3(end)+a, '--g', 'Parabola 2', 'LabelHorizontalAlignment', 'left', 'FontSize', font_size-2);
+a = a + s3(end);
+xline(s4(end)+a, '--m', 'Loop 2', 'LabelHorizontalAlignment', 'left', 'FontSize', font_size-2);
+a = a + s4(end);
+xline(s5(end)+a, '--c', 'Banked Turn 1', 'LabelHorizontalAlignment', 'left', 'FontSize', font_size-2);
+a = a + s5(end);
+xline(s6(end)+a, '--k', 'Parabola 3', 'LabelHorizontalAlignment', 'left', 'FontSize', font_size-2);
+grid on;
 hold off;
 
-
-
+figure(10);
+hold on;
+title('Braking')
+xlabel('Path length (m)')
+ylabel('Tangential Gs')
+plot(s7,Gt)
+hold off;
